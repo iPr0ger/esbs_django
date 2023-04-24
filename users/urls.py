@@ -26,4 +26,6 @@ urlpatterns = [
     path('<uuid:pk>', users_detail),
 
     path('<uuid:userId>/profile', user_profiles_detail),
+
+    path('<uuid:userId>/entities', UserEntitiesApiView.as_view()),
 ]

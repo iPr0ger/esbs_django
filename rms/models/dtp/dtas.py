@@ -9,7 +9,7 @@ from rms.models.dtp.dtps import DataTransferProcesses
 class DataTransferAccesses(models.Model):
     id = models.UUIDField(primary_key=True, editable=False, unique=True, default=uuid.uuid4, db_index=True)
     dtp_id = models.ForeignKey(DataTransferProcesses, on_delete=models.CASCADE, db_column='dtp_id',
-                               related_name='dta_dtp_id')
+                               related_name='dta_dtp_id', default=None, null=True, blank=True)
     conforms_to_default = models.BooleanField(default=False)
     variations = models.TextField(blank=True, null=True)
     dta_file_path = models.TextField(blank=True, null=True)

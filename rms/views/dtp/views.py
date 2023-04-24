@@ -8,19 +8,20 @@ from rms.models.dtp.dtp_people import DtpPeople
 from rms.models.dtp.dtp_prereqs import DtpPrereqs
 from rms.models.dtp.dtp_studies import DtpStudies
 from rms.models.dtp.dtps import DataTransferProcesses
-from rms.serializers.dtp.dtas_dto import DataTransferAccessesSerializer
-from rms.serializers.dtp.dtp_datasets_dto import DtpDatasetsSerializer
-from rms.serializers.dtp.dtp_notes_dto import DtpNotesSerializer
-from rms.serializers.dtp.dtp_objects_dto import DtpObjectsSerializer
-from rms.serializers.dtp.dtp_people_dto import DtpPeopleSerializer
-from rms.serializers.dtp.dtp_prereqs_dto import DtpPrereqsSerializer
-from rms.serializers.dtp.dtp_studies_dto import DtpStudiesSerializer
-from rms.serializers.dtp.dtps_dto import DataTransferProcessesSerializer
+from rms.serializers.dtp.dtas_dto import DataTransferAccessesOutputSerializer
+from rms.serializers.dtp.dtp_datasets_dto import DtpDatasetsOutputSerializer
+from rms.serializers.dtp.dtp_notes_dto import DtpNotesOutputSerializer
+from rms.serializers.dtp.dtp_objects_dto import DtpObjectsOutputSerializer
+from rms.serializers.dtp.dtp_people_dto import DtpPeopleOutputSerializer
+from rms.serializers.dtp.dtp_prereqs_dto import DtpPrereqsOutputSerializer
+from rms.serializers.dtp.dtp_studies_dto import DtpStudiesOutputSerializer
+from rms.serializers.dtp.dtps_dto import DataTransferProcessesOutputSerializer, \
+    DataTransferProcessesDetailsOutputSerializer
 
 
 class DataTransferAccessesList(viewsets.ModelViewSet):
     queryset = DataTransferAccesses.objects.all()
-    serializer_class = DataTransferAccessesSerializer
+    serializer_class = DataTransferAccessesOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self, *args, **kwargs):
@@ -36,7 +37,7 @@ class DataTransferAccessesList(viewsets.ModelViewSet):
 
 class DtpDatasetsList(viewsets.ModelViewSet):
     queryset = DtpDatasets.objects.all()
-    serializer_class = DtpDatasetsSerializer
+    serializer_class = DtpDatasetsOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self, *args, **kwargs):
@@ -52,7 +53,7 @@ class DtpDatasetsList(viewsets.ModelViewSet):
 
 class DtpNotesList(viewsets.ModelViewSet):
     queryset = DtpNotes.objects.all()
-    serializer_class = DtpNotesSerializer
+    serializer_class = DtpNotesOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self, *args, **kwargs):
@@ -68,7 +69,7 @@ class DtpNotesList(viewsets.ModelViewSet):
 
 class DtpObjectsList(viewsets.ModelViewSet):
     queryset = DtpObjects.objects.all()
-    serializer_class = DtpObjectsSerializer
+    serializer_class = DtpObjectsOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self, *args, **kwargs):
@@ -84,7 +85,7 @@ class DtpObjectsList(viewsets.ModelViewSet):
 
 class DtpPeopleList(viewsets.ModelViewSet):
     queryset = DtpPeople.objects.all()
-    serializer_class = DtpPeopleSerializer
+    serializer_class = DtpPeopleOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self, *args, **kwargs):
@@ -100,7 +101,7 @@ class DtpPeopleList(viewsets.ModelViewSet):
 
 class DtpPrereqsList(viewsets.ModelViewSet):
     queryset = DtpPrereqs.objects.all()
-    serializer_class = DtpPrereqsSerializer
+    serializer_class = DtpPrereqsOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self, *args, **kwargs):
@@ -116,7 +117,7 @@ class DtpPrereqsList(viewsets.ModelViewSet):
 
 class DtpStudiesList(viewsets.ModelViewSet):
     queryset = DtpStudies.objects.all()
-    serializer_class = DtpStudiesSerializer
+    serializer_class = DtpStudiesOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self, *args, **kwargs):
@@ -132,5 +133,6 @@ class DtpStudiesList(viewsets.ModelViewSet):
 
 class DataTransferProcessesList(viewsets.ModelViewSet):
     queryset = DataTransferProcesses.objects.all()
-    serializer_class = DataTransferProcessesSerializer
+    serializer_class = DataTransferProcessesOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+

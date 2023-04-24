@@ -8,19 +8,19 @@ from rms.models.dup.dup_prereqs import DupPrereqs
 from rms.models.dup.dup_secondary_use import DupSecondaryUse
 from rms.models.dup.dup_studies import DupStudies
 from rms.models.dup.dups import DataUseProcesses
-from rms.serializers.dup.duas_dto import DataUseAccessesSerializer
-from rms.serializers.dup.dup_notes_dto import DupNotesSerializer
-from rms.serializers.dup.dup_objects_dto import DupObjectsSerializer
-from rms.serializers.dup.dup_people_dto import DupPeopleSerializer
-from rms.serializers.dup.dup_prereqs_dto import DupPrereqsSerializer
-from rms.serializers.dup.dup_secondary_use_dto import DupSecondaryUseSerializer
-from rms.serializers.dup.dup_studies_dto import DupStudiesSerializer
-from rms.serializers.dup.dups_dto import DataUseProcessesSerializer
+from rms.serializers.dup.duas_dto import DataUseAccessesOutputSerializer
+from rms.serializers.dup.dup_notes_dto import DupNotesOutputSerializer
+from rms.serializers.dup.dup_objects_dto import DupObjectsOutputSerializer
+from rms.serializers.dup.dup_people_dto import DupPeopleOutputSerializer
+from rms.serializers.dup.dup_prereqs_dto import DupPrereqsOutputSerializer
+from rms.serializers.dup.dup_secondary_use_dto import DupSecondaryUseOutputSerializer
+from rms.serializers.dup.dup_studies_dto import DupStudiesOutputSerializer
+from rms.serializers.dup.dups_dto import DataUseProcessesOutputSerializer
 
 
 class DataUseAccessesList(viewsets.ReadOnlyModelViewSet):
     queryset = DataUseAccesses.objects.all()
-    serializer_class = DataUseAccessesSerializer
+    serializer_class = DataUseAccessesOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self, *args, **kwargs):
@@ -36,7 +36,7 @@ class DataUseAccessesList(viewsets.ReadOnlyModelViewSet):
 
 class DupNotesList(viewsets.ReadOnlyModelViewSet):
     queryset = DupNotes.objects.all()
-    serializer_class = DupNotesSerializer
+    serializer_class = DupNotesOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self, *args, **kwargs):
@@ -52,7 +52,7 @@ class DupNotesList(viewsets.ReadOnlyModelViewSet):
 
 class DupObjectsList(viewsets.ReadOnlyModelViewSet):
     queryset = DupObjects.objects.all()
-    serializer_class = DupObjectsSerializer
+    serializer_class = DupObjectsOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self, *args, **kwargs):
@@ -68,7 +68,7 @@ class DupObjectsList(viewsets.ReadOnlyModelViewSet):
 
 class DupPeopleList(viewsets.ReadOnlyModelViewSet):
     queryset = DupPeople.objects.all()
-    serializer_class = DupPeopleSerializer
+    serializer_class = DupPeopleOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self, *args, **kwargs):
@@ -84,7 +84,7 @@ class DupPeopleList(viewsets.ReadOnlyModelViewSet):
 
 class DupPrereqsList(viewsets.ReadOnlyModelViewSet):
     queryset = DupPrereqs.objects.all()
-    serializer_class = DupPrereqsSerializer
+    serializer_class = DupPrereqsOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self, *args, **kwargs):
@@ -100,7 +100,7 @@ class DupPrereqsList(viewsets.ReadOnlyModelViewSet):
 
 class DupSecondaryUseList(viewsets.ReadOnlyModelViewSet):
     queryset = DupSecondaryUse.objects.all()
-    serializer_class = DupSecondaryUseSerializer
+    serializer_class = DupSecondaryUseOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self, *args, **kwargs):
@@ -116,7 +116,7 @@ class DupSecondaryUseList(viewsets.ReadOnlyModelViewSet):
 
 class DupStudiesList(viewsets.ReadOnlyModelViewSet):
     queryset = DupStudies.objects.all()
-    serializer_class = DupStudiesSerializer
+    serializer_class = DupStudiesOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self, *args, **kwargs):
@@ -132,5 +132,5 @@ class DupStudiesList(viewsets.ReadOnlyModelViewSet):
 
 class DataUseProcessesList(viewsets.ReadOnlyModelViewSet):
     queryset = DataUseProcesses.objects.all()
-    serializer_class = DataUseProcessesSerializer
+    serializer_class = DataUseProcessesOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]

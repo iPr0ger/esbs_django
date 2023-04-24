@@ -12,12 +12,17 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 
-from configs.app_settings import SECRET_APP_KEY, ALLOWED_APP_HOSTS
+from configs.app_settings import *
+from configs.esbs_db_settings import *
 from configs.identity_configs import CLIENT_ID, CLIENT_SECRET, AUTHORIZATION_ENDPOINT, TOKEN_ENDPOINT, USER_ENDPOINT
+from configs.users_db_settings import *
+from configs.context_db_settings import *
+from configs.general_db_settings import *
+from configs.rms_db_settings import *
+from configs.mdm_db_settings import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -29,7 +34,6 @@ SECRET_KEY = SECRET_APP_KEY
 DEBUG = True
 
 ALLOWED_HOSTS = ALLOWED_APP_HOSTS
-
 
 # Application definition
 
@@ -98,11 +102,79 @@ WSGI_APPLICATION = 'esbs.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    ESBS_DB_KEY_NAME: {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': DEV_PG_DATABASE_ESBS_DB,
+        'USER': DEV_PG_USER_ESBS_DB,
+        'PASSWORD': DEV_PG_PASSWORD_ESBS_DB,
+        'HOST': DEV_PG_HOST_ESBS_DB,
+        'PORT': DEV_PG_PORT_ESBS_DB,
+    },
+    'sqlite_backup': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'db.sqlite3',
     }
 }
+
+DATABASE_ROUTERS = []
+
+
+if not IS_CONTEXT_DB_CONSTRAINT:
+    DATABASES[CONTEXT_DB_KEY_NAME] = {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': DEV_PG_DATABASE_CONTEXT_DB,
+        'USER': DEV_PG_USER_CONTEXT_DB,
+        'PASSWORD': DEV_PG_PASSWORD_CONTEXT_DB,
+        'HOST': DEV_PG_HOST_CONTEXT_DB,
+        'PORT': DEV_PG_PORT_CONTEXT_DB,
+    }
+    DATABASE_ROUTERS.append('context.db_router.ContextDbRouter')
+
+if not IS_GENERAL_DB_CONSTRAINT:
+    DATABASES[GENERAL_DB_KEY_NAME] = {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': DEV_PG_DATABASE_GENERAL_DB,
+        'USER': DEV_PG_USER_GENERAL_DB,
+        'PASSWORD': DEV_PG_PASSWORD_GENERAL_DB,
+        'HOST': DEV_PG_HOST_GENERAL_DB,
+        'PORT': DEV_PG_PORT_GENERAL_DB,
+    }
+    DATABASE_ROUTERS.append('general.db_router.GeneralDbRouter')
+
+if not IS_RMS_DB_CONSTRAINT:
+    DATABASES[RMS_DB_KEY_NAME] = {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': DEV_PG_DATABASE_RMS_DB,
+        'USER': DEV_PG_USER_RMS_DB,
+        'PASSWORD': DEV_PG_PASSWORD_RMS_DB,
+        'HOST': DEV_PG_HOST_RMS_DB,
+        'PORT': DEV_PG_PORT_RMS_DB,
+    }
+    DATABASE_ROUTERS.append('rms.db_router.RmsDbRouter')
+
+if not IS_MDM_DB_CONSTRAINT:
+    DATABASES[MDM_DB_KEY_NAME] = {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': DEV_PG_DATABASE_MDM_DB,
+        'USER': DEV_PG_USER_MDM_DB,
+        'PASSWORD': DEV_PG_PASSWORD_MDM_DB,
+        'HOST': DEV_PG_HOST_MDM_DB,
+        'PORT': DEV_PG_PORT_MDM_DB,
+    }
+    DATABASE_ROUTERS.append('mdm.db_router.MdmDbRouter')
+
+
+if not IS_USERS_DB_CONSTRAINT:
+    DATABASES[USERS_DB_KEY_NAME] = {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': DEV_PG_DATABASE_USERS_DB,
+        'USER': DEV_PG_USER_USERS_DB,
+        'PASSWORD': DEV_PG_PASSWORD_USERS_DB,
+        'HOST': DEV_PG_HOST_USERS_DB,
+        'PORT': DEV_PG_PORT_USERS_DB,
+    }
+    DATABASE_ROUTERS.append('users.db_router.UsersDbRouter')
+
 
 # REST FRAMEWORK SETTINGS
 # https://www.django-rest-framework.org/
@@ -110,10 +182,12 @@ DATABASES = {
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'mozilla_django_oidc.contrib.drf.OIDCAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication'
     ],
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+        'rest_framework.permissions.IsAdminUser'
     ],
     'DEFAULT_RENDERER_CLASSES': (
         'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
@@ -130,7 +204,6 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -150,7 +223,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
@@ -161,15 +233,12 @@ ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = '/?verification=1'
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = '/?verification=1'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 REST_AUTH_SERIALIZERS = {
     "USER_DETAILS_SERIALIZER": "soiree.serializers.CustomUserDetailsSerializer",
 }
 REST_AUTH_REGISTER_SERIALIZERS = {
     "REGISTER_SERIALIZER": "soiree.serializers.CustomRegisterSerializer",
 }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -182,7 +251,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
@@ -192,7 +260,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 # OIDC settings
 # https://proxy.aai.lifescience-ri.eu/.well-known/openid-configuration
@@ -210,4 +277,27 @@ OIDC_AUTH_REQUEST_EXTRA_PARAMS = {"code_challenge": "S256"}
 
 AUTHENTICATION_BACKENDS = (
     'mozilla_django_oidc.auth.OIDCAuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend'
 )
+
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False,
+    'SECURITY_DEFINITIONS': {
+        'Basic': {
+            'type': 'basic'
+        },
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+}
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = SMTP_HOST
+EMAIL_USE_TLS = True
+EMAIL_PORT = SMTP_PORT
+EMAIL_HOST_USER = SMTP_LOGIN
+EMAIL_HOST_PASSWORD = SMTP_PASSWORD

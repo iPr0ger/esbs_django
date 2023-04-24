@@ -3,6 +3,7 @@ import uuid
 
 from django.db import models
 
+from configs.users_db_settings import IS_USERS_DB_CONSTRAINT
 from users.models.users import Users
 
 
@@ -22,7 +23,8 @@ class MdrRecordChanges(models.Model):
     change_type = models.CharField(max_length=15, choices=CHANGE_TYPES, blank=True, null=True)
     change_time = models.DateTimeField(default=datetime.datetime.utcnow)
     user_id = models.ForeignKey(Users, on_delete=models.CASCADE, blank=True, null=True,
-                                related_name='mdr_record_changes_user_id')
+                                related_name='mdr_record_changes_user_id', default=None, db_column='user_id',
+                                db_constraint=IS_USERS_DB_CONSTRAINT)
     previous_value = models.TextField(blank=True, null=True)
     new_value = models.TextField(blank=True, null=True)
 

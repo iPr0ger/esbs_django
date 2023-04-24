@@ -11,35 +11,35 @@ from general.models.org_relationships import OrgRelationships
 from general.models.org_type_membership import OrgTypeMembership
 from general.models.organisations import Organisations
 from general.models.published_journals import PublishedJournals
-from general.serializers.geog_entities_dto import GeogEntitiesSerializer
-from general.serializers.language_codes_dto import LanguageCodesSerializer
-from general.serializers.mesh_lookup_dto import MeshLookupSerializer
-from general.serializers.org_attributes_dto import OrgAttributesSerializer
-from general.serializers.org_links_dto import OrgLinksSerializer
-from general.serializers.org_locations_dto import OrgLocationsSerializer
-from general.serializers.org_names_dto import OrgNamesSerializer
-from general.serializers.org_relationships_dto import OrgRelationshipsSerializer
-from general.serializers.org_type_membership_dto import OrgTypeMembershipSerializer
-from general.serializers.organisations_dto import OrganisationsSerializer
-from general.serializers.published_journals_dto import PublishedJournalsSerializer
+from general.serializers.geog_entities_dto import GeogEntitiesOutputSerializer
+from general.serializers.language_codes_dto import LanguageCodesOutputSerializer
+from general.serializers.mesh_lookup_dto import MeshLookupOutputSerializer
+from general.serializers.org_attributes_dto import OrgAttributesOutputSerializer
+from general.serializers.org_links_dto import OrgLinksOutputSerializer
+from general.serializers.org_locations_dto import OrgLocationsOutputSerializer
+from general.serializers.org_names_dto import OrgNamesOutputSerializer
+from general.serializers.org_relationships_dto import OrgRelationshipsOutputSerializer
+from general.serializers.org_type_membership_dto import OrgTypeMembershipOutputSerializer
+from general.serializers.organisations_dto import OrganisationsOutputSerializer
+from general.serializers.published_journals_dto import PublishedJournalsOutputSerializer
 
 
 # Create your views here.
 class GeogEntitiesList(viewsets.ReadOnlyModelViewSet):
     queryset = GeogEntities.objects.all()
-    serializer_class = GeogEntitiesSerializer
+    serializer_class = GeogEntitiesOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
 class MeshLookupList(viewsets.ReadOnlyModelViewSet):
     queryset = MeshLookup.objects.all()
-    serializer_class = MeshLookupSerializer
+    serializer_class = MeshLookupOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
 class OrgAttributesList(viewsets.ReadOnlyModelViewSet):
     queryset = OrgAttributes.objects.all()
-    serializer_class = OrgAttributesSerializer
+    serializer_class = OrgAttributesOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self, *args, **kwargs):
@@ -55,7 +55,7 @@ class OrgAttributesList(viewsets.ReadOnlyModelViewSet):
 
 class OrgLinksList(viewsets.ReadOnlyModelViewSet):
     queryset = OrgLinks.objects.all()
-    serializer_class = OrgLinksSerializer
+    serializer_class = OrgLinksOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self, *args, **kwargs):
@@ -71,7 +71,7 @@ class OrgLinksList(viewsets.ReadOnlyModelViewSet):
 
 class OrgLocationsList(viewsets.ReadOnlyModelViewSet):
     queryset = OrgLocations.objects.all()
-    serializer_class = OrgLocationsSerializer
+    serializer_class = OrgLocationsOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self, *args, **kwargs):
@@ -87,7 +87,7 @@ class OrgLocationsList(viewsets.ReadOnlyModelViewSet):
 
 class OrgNamesList(viewsets.ReadOnlyModelViewSet):
     queryset = OrgNames.objects.all()
-    serializer_class = OrgNamesSerializer
+    serializer_class = OrgNamesOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self, *args, **kwargs):
@@ -103,7 +103,7 @@ class OrgNamesList(viewsets.ReadOnlyModelViewSet):
 
 class OrgRelationshipsList(viewsets.ReadOnlyModelViewSet):
     queryset = OrgRelationships.objects.all()
-    serializer_class = OrgRelationshipsSerializer
+    serializer_class = OrgRelationshipsOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self, *args, **kwargs):
@@ -119,7 +119,7 @@ class OrgRelationshipsList(viewsets.ReadOnlyModelViewSet):
 
 class OrgTypeMembershipList(viewsets.ReadOnlyModelViewSet):
     queryset = OrgTypeMembership.objects.all()
-    serializer_class = OrgTypeMembershipSerializer
+    serializer_class = OrgTypeMembershipOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self, *args, **kwargs):
@@ -135,17 +135,17 @@ class OrgTypeMembershipList(viewsets.ReadOnlyModelViewSet):
 
 class PublishedJournalsList(viewsets.ReadOnlyModelViewSet):
     queryset = PublishedJournals.objects.all()
-    serializer_class = PublishedJournalsSerializer
+    serializer_class = PublishedJournalsOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
 class LanguageCodesList(viewsets.ReadOnlyModelViewSet):
     queryset = LanguageCodes.objects.all()
-    serializer_class = LanguageCodesSerializer
+    serializer_class = LanguageCodesOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
 class OrganisationsList(viewsets.ModelViewSet):
     queryset = Organisations.objects.all()
-    serializer_class = OrganisationsSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = OrganisationsOutputSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]

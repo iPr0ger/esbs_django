@@ -35,15 +35,15 @@ services:
       timeout: 30s
       retries: 5
 
-  mdr-db:
+  mdm-db:
     image: postgres:14
-    container_name: mdr-db
+    container_name: mdm-db
     restart: unless-stopped
     command: postgres -c 'max_connections=300'
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: mdr
+      POSTGRES_DB: mdm
     ports:
       - 5438:5432
     healthcheck:
@@ -69,6 +69,40 @@ services:
       timeout: 30s
       retries: 5
 
+  user-db:
+    image: postgres:14
+    container_name: user-db
+    restart: unless-stopped
+    command: postgres -c 'max_connections=300'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: users
+    ports:
+      - 5440:5432
+    healthcheck:
+      test: [ CMD-SHELL, pg_isready -h localhost -p 5432 ]
+      interval: 10s
+      timeout: 30s
+      retries: 5
+
+  esbs-db:
+    image: postgres:14
+    container_name: esbs-db
+    restart: unless-stopped
+    command: postgres -c 'max_connections=300'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: esbs
+    ports:
+      - 5441:5432
+    healthcheck:
+      test: [ CMD-SHELL, pg_isready -h localhost -p 5432 ]
+      interval: 10s
+      timeout: 30s
+      retries: 5
+
   esbs:
     build: ./Dockerfile
     command: python manage.py runserver 0.0.0.0:8000
@@ -79,5 +113,7 @@ services:
     depends_on:
       - context-db
       - rms-db
-      - mdr-db
+      - mdm-db
       - general-db
+      - user-db
+      - esbs-db

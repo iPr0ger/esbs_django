@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime
+import datetime
 
 from django.db import models
 
@@ -12,7 +12,7 @@ class LanguageCodes(models.Model):
     lang_name_fr = models.CharField(max_length=50, db_index=True)
     lang_name_de = models.CharField(max_length=50, db_index=True)
     source = models.CharField(max_length=50, db_index=True)
-    date_added = models.DateTimeField(default=datetime.utcnow)
+    date_added = models.DateField(default=datetime.date.today)
 
     class Meta:
         db_table = "language_codes"

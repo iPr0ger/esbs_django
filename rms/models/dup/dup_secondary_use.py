@@ -9,7 +9,7 @@ from rms.models.dup.dups import DataUseProcesses
 class DupSecondaryUse(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, db_index=True, unique=True)
     dup_id = models.ForeignKey(DataUseProcesses, on_delete=models.CASCADE, db_column='dup_id', db_index=True,
-                               related_name='dup_secondary_use_dup_id')
+                               related_name='dup_secondary_use_dup_id', default=None, null=True, blank=True)
     secondary_use_summary = models.TextField(blank=True, null=True)
     publication = models.TextField(blank=True, null=True)
     doi = models.TextField(blank=True, null=True)

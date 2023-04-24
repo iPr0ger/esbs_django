@@ -1,13 +1,19 @@
 from rest_framework import serializers
 
-from context.serializers.org_types_dto import OrgTypesSerializer
+from context.serializers.org_types_dto import OrgTypesOutputSerializer
 from general.models.org_type_membership import OrgTypeMembership
-from general.serializers.organisations_dto import OrganisationsSerializer
+from general.serializers.organisations_dto import OrganisationsOutputSerializer
 
 
-class OrgTypeMembershipSerializer(serializers.ModelSerializer):
-    organisation = OrganisationsSerializer(many=False, read_only=True)
-    org_type = OrgTypesSerializer(many=False, read_only=True)
+class OrgTypeMembershipInputSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrgTypeMembership
+        fields = '__all__'
+
+
+class OrgTypeMembershipOutputSerializer(serializers.ModelSerializer):
+    organisation = OrganisationsOutputSerializer(many=False, read_only=True)
+    org_type = OrgTypesOutputSerializer(many=False, read_only=True)
 
     class Meta:
         model = OrgTypeMembership

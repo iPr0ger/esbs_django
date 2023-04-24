@@ -11,29 +11,45 @@ from mdm.models.data_object.object_relationships import ObjectRelationships
 from mdm.models.data_object.object_rights import ObjectRights
 from mdm.models.data_object.object_titles import ObjectTitles
 from mdm.models.data_object.object_topics import ObjectTopics
-from mdm.serializers.data_object.data_objects_dto import DataObjectsSerializer
-from mdm.serializers.data_object.object_contributors_dto import ObjectContributorsSerializer
-from mdm.serializers.data_object.object_datasets_dto import ObjectDatasetsSerializer
-from mdm.serializers.data_object.object_dates_dto import ObjectDatesSerializer
-from mdm.serializers.data_object.object_descriptions_dto import ObjectDescriptionsSerializer
-from mdm.serializers.data_object.object_identifiers_dto import ObjectIdentifiersSerializer
-from mdm.serializers.data_object.object_instances_dto import ObjectInstancesSerializer
-from mdm.serializers.data_object.object_relationships_dto import ObjectRelationshipsSerializer
-from mdm.serializers.data_object.object_rights_dto import ObjectRightsSerializer
-from mdm.serializers.data_object.object_titles_dto import ObjectTitlesSerializer
-from mdm.serializers.data_object.object_topics_dto import ObjectTopicsSerializer
+from mdm.serializers.data_object.data_objects_dto import DataObjectsOutputSerializer, DataObjectsInputSerializer
+from mdm.serializers.data_object.object_contributors_dto import ObjectContributorsOutputSerializer, \
+    ObjectContributorsInputSerializer
+from mdm.serializers.data_object.object_datasets_dto import ObjectDatasetsOutputSerializer, \
+    ObjectDatasetsInputSerializer
+from mdm.serializers.data_object.object_dates_dto import ObjectDatesOutputSerializer, ObjectDatesInputSerializer
+from mdm.serializers.data_object.object_descriptions_dto import ObjectDescriptionsOutputSerializer, \
+    ObjectDescriptionsInputSerializer
+from mdm.serializers.data_object.object_identifiers_dto import ObjectIdentifiersOutputSerializer, \
+    ObjectIdentifiersInputSerializer
+from mdm.serializers.data_object.object_instances_dto import ObjectInstancesOutputSerializer, \
+    ObjectInstancesInputSerializer
+from mdm.serializers.data_object.object_relationships_dto import ObjectRelationshipsOutputSerializer, \
+    ObjectRelationshipsInputSerializer
+from mdm.serializers.data_object.object_rights_dto import ObjectRightsOutputSerializer, ObjectRightsInputSerializer
+from mdm.serializers.data_object.object_titles_dto import ObjectTitlesOutputSerializer, ObjectTitlesInputSerializer
+from mdm.serializers.data_object.object_topics_dto import ObjectTopicsOutputSerializer, ObjectTopicsInputSerializer
 
 
 class DataObjectsList(viewsets.ModelViewSet):
     queryset = DataObjects.objects.all()
-    serializer_class = DataObjectsSerializer
+    serializer_class = DataObjectsOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_serializer_class(self):
+        if self.action in ["create", "update", "partial_update"]:
+            return DataObjectsInputSerializer
+        return super().get_serializer_class()
 
 
 class ObjectContributorsList(viewsets.ModelViewSet):
     queryset = ObjectContributors.objects.all()
-    serializer_class = ObjectContributorsSerializer
+    serializer_class = ObjectContributorsOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_serializer_class(self):
+        if self.action in ["create", "update", "partial_update"]:
+            return ObjectContributorsInputSerializer
+        return super().get_serializer_class()
 
     def get_queryset(self, *args, **kwargs):
         if getattr(self, 'swagger_fake_view', False):
@@ -48,8 +64,13 @@ class ObjectContributorsList(viewsets.ModelViewSet):
 
 class ObjectDatasetsList(viewsets.ModelViewSet):
     queryset = ObjectDatasets.objects.all()
-    serializer_class = ObjectDatasetsSerializer
+    serializer_class = ObjectDatasetsOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_serializer_class(self):
+        if self.action in ["create", "update", "partial_update"]:
+            return ObjectDatasetsInputSerializer
+        return super().get_serializer_class()
 
     def get_queryset(self, *args, **kwargs):
         if getattr(self, 'swagger_fake_view', False):
@@ -64,8 +85,13 @@ class ObjectDatasetsList(viewsets.ModelViewSet):
 
 class ObjectDatesList(viewsets.ModelViewSet):
     queryset = ObjectDates.objects.all()
-    serializer_class = ObjectDatesSerializer
+    serializer_class = ObjectDatesOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_serializer_class(self):
+        if self.action in ["create", "update", "partial_update"]:
+            return ObjectDatesInputSerializer
+        return super().get_serializer_class()
 
     def get_queryset(self, *args, **kwargs):
         if getattr(self, 'swagger_fake_view', False):
@@ -80,8 +106,13 @@ class ObjectDatesList(viewsets.ModelViewSet):
 
 class ObjectDescriptionsList(viewsets.ModelViewSet):
     queryset = ObjectDescriptions.objects.all()
-    serializer_class = ObjectDescriptionsSerializer
+    serializer_class = ObjectDescriptionsOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_serializer_class(self):
+        if self.action in ["create", "update", "partial_update"]:
+            return ObjectDescriptionsInputSerializer
+        return super().get_serializer_class()
 
     def get_queryset(self, *args, **kwargs):
         if getattr(self, 'swagger_fake_view', False):
@@ -96,8 +127,13 @@ class ObjectDescriptionsList(viewsets.ModelViewSet):
 
 class ObjectIdentifiersList(viewsets.ModelViewSet):
     queryset = ObjectIdentifiers.objects.all()
-    serializer_class = ObjectIdentifiersSerializer
+    serializer_class = ObjectIdentifiersOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_serializer_class(self):
+        if self.action in ["create", "update", "partial_update"]:
+            return ObjectIdentifiersInputSerializer
+        return super().get_serializer_class()
 
     def get_queryset(self, *args, **kwargs):
         if getattr(self, 'swagger_fake_view', False):
@@ -112,8 +148,13 @@ class ObjectIdentifiersList(viewsets.ModelViewSet):
 
 class ObjectInstancesList(viewsets.ModelViewSet):
     queryset = ObjectInstances.objects.all()
-    serializer_class = ObjectInstancesSerializer
+    serializer_class = ObjectInstancesOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_serializer_class(self):
+        if self.action in ["create", "update", "partial_update"]:
+            return ObjectInstancesInputSerializer
+        return super().get_serializer_class()
 
     def get_queryset(self, *args, **kwargs):
         if getattr(self, 'swagger_fake_view', False):
@@ -128,8 +169,13 @@ class ObjectInstancesList(viewsets.ModelViewSet):
 
 class ObjectRelationshipsList(viewsets.ModelViewSet):
     queryset = ObjectRelationships.objects.all()
-    serializer_class = ObjectRelationshipsSerializer
+    serializer_class = ObjectRelationshipsOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_serializer_class(self):
+        if self.action in ["create", "update", "partial_update"]:
+            return ObjectRelationshipsInputSerializer
+        return super().get_serializer_class()
 
     def get_queryset(self, *args, **kwargs):
         if getattr(self, 'swagger_fake_view', False):
@@ -144,8 +190,13 @@ class ObjectRelationshipsList(viewsets.ModelViewSet):
 
 class ObjectRightsList(viewsets.ModelViewSet):
     queryset = ObjectRights.objects.all()
-    serializer_class = ObjectRightsSerializer
+    serializer_class = ObjectRightsOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_serializer_class(self):
+        if self.action in ["create", "update", "partial_update"]:
+            return ObjectRightsInputSerializer
+        return super().get_serializer_class()
 
     def get_queryset(self, *args, **kwargs):
         if getattr(self, 'swagger_fake_view', False):
@@ -160,8 +211,13 @@ class ObjectRightsList(viewsets.ModelViewSet):
 
 class ObjectTitlesList(viewsets.ModelViewSet):
     queryset = ObjectTitles.objects.all()
-    serializer_class = ObjectTitlesSerializer
+    serializer_class = ObjectTitlesOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_serializer_class(self):
+        if self.action in ["create", "update", "partial_update"]:
+            return ObjectTitlesInputSerializer
+        return super().get_serializer_class()
 
     def get_queryset(self, *args, **kwargs):
         if getattr(self, 'swagger_fake_view', False):
@@ -176,8 +232,13 @@ class ObjectTitlesList(viewsets.ModelViewSet):
 
 class ObjectTopicsList(viewsets.ModelViewSet):
     queryset = ObjectTopics.objects.all()
-    serializer_class = ObjectTopicsSerializer
+    serializer_class = ObjectTopicsOutputSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_serializer_class(self):
+        if self.action in ["create", "update", "partial_update"]:
+            return ObjectTopicsInputSerializer
+        return super().get_serializer_class()
 
     def get_queryset(self, *args, **kwargs):
         if getattr(self, 'swagger_fake_view', False):

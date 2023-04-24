@@ -9,7 +9,7 @@ from rms.models.dup.dups import DataUseProcesses
 class DataUseAccesses(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, db_index=True)
     dup_id = models.ForeignKey(DataUseProcesses, on_delete=models.CASCADE, db_index=True,
-                               related_name='dua_dup_id')
+                               related_name='dua_dup_id', default=None, null=True, blank=True, db_column='dup_id')
     conforms_to_default = models.BooleanField(default=False, db_index=True)
     variations = models.TextField(blank=True, null=True)
     repo_is_proxy_provider = models.BooleanField(default=False, db_index=True)

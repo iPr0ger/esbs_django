@@ -24,6 +24,8 @@ urlpatterns = [
 
     path('oidc/', include('mozilla_django_oidc.urls')),
 
+    path('app/', include('app.urls')),
+
     path('api/context/', include('context.urls')),
     path('api/general/', include('general.urls')),
     path('api/mdm/', include('mdm.urls')),
